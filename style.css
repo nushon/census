@@ -1,0 +1,150 @@
+        body {
+            background-color: #f1f3ef;
+        }
+        
+        .census {
+            margin-left: 80px;
+        }
+        
+        #rightdiv {
+            display: grid;
+            grid-template-columns: 5% 5%;
+            height: 10px;
+            background-color: darkgreen;
+        }
+        
+        .part {
+            background-color: darkgrey;
+        }
+        
+        #overall {
+            display: grid;
+            grid-template-columns: 27% 27% 27%;
+            column-gap: 3%;
+            /* background-color: aqua; */
+            width: 100%;
+            height: 130px;
+            justify-content: center;
+        }
+        
+        .top {
+            background-color: #FFFFFF;
+            display: grid;
+            grid-template-columns: 5% 5%;
+            column-gap: 2%;
+            border-radius: 7px;
+        }
+        
+        #secondDiv {
+            display: grid;
+            grid-template-columns: 57% 27%;
+            column-gap: 3%;
+            /* background-color: chocolate; */
+            /* width: 100%; */
+            height: 370px;
+            justify-content: center;
+            margin: 30px 0px 0px 0px;
+        }
+        
+        #countyChart {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+        }
+        
+        #countyDiagram {
+            background-color: #519872;
+            border-radius: 8px;
+        }
+        
+        #thirddiv {
+            display: grid;
+            grid-template-columns: 35% 35%;
+            column-gap: 43%;
+            background-color: #FFFFFF;
+            width: 74%;
+            height: 450px;
+            justify-self: center;
+            margin: 40px 0px 0px 80px;
+            border-radius: 8px;
+            padding: 80px;
+        }
+        
+        #counties {
+            background-color: #F0F2EF;
+            /* border-color: #B1D2C2; */
+            border: 3px solid#B1D2C2;
+            width: 75%;
+            height: 50px;
+            font-size: x-large;
+            text-align: center;
+            margin-bottom: 50px;
+            /* margin: -50px 0px 0px 740px; */
+        }
+        
+        #district {
+            margin: 0px 0px -10px 0px;
+        }
+        
+        #fourthdiv {
+            display: grid;
+            grid-template-columns: 30% 27%;
+            column-gap: 31%;
+            justify-content: center;
+            width: 87%;
+            background-color: #519872;
+            height: 120px;
+            margin: 45px 0px 0px 80px;
+            border-radius: 10px;
+        }
+        
+        #download {
+            display: grid;
+            grid-template-columns: 5% 18%;
+            column-gap: 10%;
+            background-color: #F0F2EF;
+            height: 73px;
+            margin-top: 25px;
+            text-align: center;
+            border-radius: 10px;
+            justify-content: center;
+        }
+        
+        #txtDownload {
+            margin-top: 30px;
+        }
+        
+        #downloadIcon {
+            height: 30px;
+            background-color: #519872;
+            margin: 20px 0px 0px -25px;
+            border-radius: 10px;
+        }
+        
+        #btnDownload {
+            height: 3px;
+        }
+        
+        #fifthDiv {
+            display: grid;
+            grid-template-columns: 55% 30%;
+            column-gap: 2%;
+            justify-content: center;
+            /* width: 87%; */
+            /* background-color: brown; */
+            height: 450px;
+            margin: 45px 0px 0px 0px;
+            border-radius: 8px;
+        }
+        
+        #householdChart {
+            /* width: 87%; */
+            background-color: #FFFFFF;
+            /* height: 400px; */
+            margin: 0px 0px 0px 0px;
+            border-radius: 10px;
+        }
+        
+        #population {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+        }

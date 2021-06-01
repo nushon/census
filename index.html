@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>census</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <h1 class="census">census2008</h1>
+        <!-- <div id="rigthdiv">
+            <div class="part">
+                <h3>Home</h3>
+            </div>
+
+            <div class="part">
+                <h3>Download</h3>
+            </div>
+        </div> -->
+    </header>
+    <div id="overall">
+        <div class="top">
+            <div id="text1">
+                <h3>Total Population</h3>
+                <h1 id="totalpop">12367</h1>
+            </div>
+            <div id="icon1"></div>
+        </div>
+
+        <div class="top">
+            <div id="text2"></div>
+            <div id="icon2"></div>
+        </div>
+
+        <div class="top">
+            <div id="text3"></div>
+            <div id="icon3"></div>
+        </div>
+
+    </div>
+
+    <div id="secondDiv">
+        <canvas id="countyChart" width="0" height="0"></canvas>
+        <div id="countyDiagram"></div>
+    </div>
+
+    <div id="thirddiv">
+        <div>
+            <h3 id="district">Distribution of Population by District</h3>
+        </div>
+        <div>
+            <select name="county" id="counties">
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Bong</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+            <option value="montserrado">Montserrado</option>
+        </select>
+        </div>
+    </div>
+
+    <div id="fourthdiv">
+        <div id="txtDownload">
+            <h2>Download 2008 Census data</h2>
+        </div>
+        <div id="download">
+            <div id="downloadIcon">
+
+            </div>
+            <div id="btnDownload">
+                <h2>Download</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="fifthDiv">
+        <div id="householdChart"></div>
+        <div id="population"></div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
