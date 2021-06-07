@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>census</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
 
 </head>
@@ -26,28 +27,48 @@
     </header>
     <div id="overall">
         <div class="top">
-            <div id="text1">
-                <h3>Total Population</h3>
-                <h1 id="totalpop">12367</h1>
+            <div id="icon1">
+                <i class="	fa fa-venus-mars" style="font-size: 40px; font-weight: 1000; margin: 5px 0px 0px 3px; color: white;"></i>
             </div>
-            <div id="icon1"></div>
+            <div id="text1">
+                <p class="types">TOTAL POPULATION</p>
+                <h1 class="values" id="totalpop">12367</h1>
+            </div>
+
         </div>
 
         <div class="top">
-            <div id="text2"></div>
-            <div id="icon2"></div>
+            <div id="icon2">
+                <i class="fa fa-venus" style="font-size: 40px; font-weight: 1000; margin: 5px 0px 0px 13px; color: white;"></i>
+            </div>
+            <div id="text2">
+                <p class="types">FEMALE</p>
+                <h1 class="values" id="femalePop"></h1>
+            </div>
+
         </div>
 
         <div class="top">
-            <div id="text3"></div>
-            <div id="icon3"></div>
+            <div id="icon3">
+                <i class="fa fa-mars" style="font-size: 40px; font-weight: 1000; margin: 5px 0px 0px 10px; color: white;"></i>
+            </div>
+            <div id="text3">
+                <p class="types">MALE</p>
+                <h1 class="values" id="malePop"></h1>
+            </div>
+
         </div>
 
     </div>
 
     <div id="secondDiv">
-        <canvas id="countyChart" width="0" height="0"></canvas>
-        <div id="countyDiagram"></div>
+
+        <div id="countyChart">
+            <canvas id="chart"></canvas>
+        </div>
+        <div id="countyDiagram">
+            <canvas id="donuttChart"></canvas>
+        </div>
     </div>
 
     <div id="thirddiv">

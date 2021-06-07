@@ -1,54 +1,81 @@
-let censusData = [];
-let totalpop = document.getElementById("totalpop").innerHTML;
+let censusData;
+
 
 fetch('./census.json')
     .then(response => response.json())
     .then(data => {
-        censusData.push(data.population);
+        censusData = data.population;
 
-    })
-console.log('Success:', censusData);
-for (let i = 0; i < censusData; i++) {
-    console.log(censusData[i]);
+        // Getting total Male Popilation Using Map
+        let male = censusData.map(ele => {
+            return ele.male
+        });
+        // Getting total Male Popilation Using reduce
+        const MalePopulation = (accumulator, currentValue) => accumulator + currentValue;
+        let malePop = (male.reduce(MalePopulation));
 
-}
-// console.log(censusData.population);
+        let totalmalePop = document.getElementById("malePop").innerHTML = malePop;
+        console.log("Male", totalmalePop);
+
+        // Getting total Female Popilation Using Map
+        let female = censusData.map(ele => {
+            return ele.female;
+        });
+        // Getting total Female Popilation Using reduce
+        const FemalePopulation = (accumulator, currentValue) => accumulator + currentValue;
+        let femalePop = (female.reduce(FemalePopulation));
+        let totalfemalePop = document.getElementById("femalePop").innerHTML = femalePop;
+        console.log("Female", totalfemalePop);
+
+        let county = censusData.map(ele => {
+            return ele.county;
+        });
 
 
+        let totalCounties = county.filter((c, index) => {
+            return county.indexOf(c) === index;
+        });
 
+        console.log(totalCounties)
+            // Getting Total Population
+        let getTotal = (totalmalePop + totalfemalePop);
+        let totalpop = document.getElementById("totalpop").innerHTML = getTotal;
+        console.log("Total", totalpop);
 
-var ctx = document.getElementById('countyChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+        // Graph
+        var ctx = document.getElementById('chart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Bomi', 'Bong', 'Gbarpolu', 'Grand Bassa', 'Grand CapeMount', 'Grand Gedeh', 'Grand Kru', 'Lofa', 'Margibi', 'Maryland', 'Montserrado', 'Nimba', 'Rivercess', 'River Gee', 'Sinoe'],
+                datasets: [{
+                    label: 'Counties Population',
+                    data: [totalpop],
+                    backgroundColor: [
+                        '#519872',
+                        '#519872',
+                        '#519872',
+                        '#519872',
+                        '#519872',
+                        '#519872'
+                    ],
+                    borderColor: [
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-        }
-    }
-});
+        });
+    })
