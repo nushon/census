@@ -42,22 +42,49 @@ fetch('./census.json')
         let totalpop = document.getElementById("totalpop").innerHTML = getTotal;
         console.log("Total", totalpop);
 
+        // Getting Total for individual county
+
+        const individualCounty = censusData.reduce((acc, value) => {
+            const county = value.county;
+
+            // console.log(county);
+
+            if (!acc[county]) {
+                acc[county] = {};
+            }
+
+            const allCountyMales = acc[county].male || 0;
+            const allCountyFemales = acc[county].female || 0;
+            const updatedMales = allCountyMales + value.male;
+            const updatedFemales = allCountyFemales + value.female;
+            acc[county] = updatedMales + updatedFemales;
+
+
+            return acc;
+
+        }, {})
+
+
+        // let countyValues = ;
+
+        console.log(individualCounty);
+
         // Graph
         var ctx = document.getElementById('chart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Bomi', 'Bong', 'Gbarpolu', 'Grand Bassa', 'Grand CapeMount', 'Grand Gedeh', 'Grand Kru', 'Lofa', 'Margibi', 'Maryland', 'Montserrado', 'Nimba', 'Rivercess', 'River Gee', 'Sinoe'],
+                labels: totalCounties,
                 datasets: [{
                     label: 'Counties Population',
-                    data: [totalpop],
+                    data: individualCounty,
                     backgroundColor: [
-                        '#519872',
-                        '#519872',
-                        '#519872',
-                        '#519872',
-                        '#519872',
-                        '#519872'
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2'
                     ],
                     borderColor: [
                         '#B1D2C2',
@@ -76,6 +103,28 @@ fetch('./census.json')
                         beginAtZero: true
                     }
                 }
+            }
+        });
+
+        new Chart(document.getElementById("doughnut-chart"), {
+            type: 'doughnut',
+            data: {
+
+                datasets: [{
+                    label: "Population (millions)",
+                    backgroundColor: ["#FFFFFF", "#B1D2C2"],
+                    data: [totalfemalePop, totalmalePop]
+                }],
+                labels: ["Female", "Male"],
+
+
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Liberia census 2008'
+                },
+                aspectRatio: 1.2
             }
         });
     })
