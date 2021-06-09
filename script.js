@@ -44,30 +44,29 @@ fetch('./census.json')
 
         // Getting Total for individual county
 
-        const individualCounty = censusData.reduce((acc, value) => {
-            const county = value.county;
+        let individualCounty = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.county] || 0) + value.male + value.female, acc), {})
+        console.log(individualCounty);
 
-            // console.log(county);
+        // OLD CODE
 
-            if (!acc[county]) {
-                acc[county] = {};
-            }
+        // let county = value.county;
 
-            const allCountyMales = acc[county].male || 0;
-            const allCountyFemales = acc[county].female || 0;
-            const updatedMales = allCountyMales + value.male;
-            const updatedFemales = allCountyFemales + value.female;
-            acc[county] = updatedMales + updatedFemales;
+        // if (!acc[county]) {
+        //     acc[county] = {};
+        // }
 
+        // const allCountyMales = acc[county].male || 0;
+        // const allCountyFemales = acc[county].female || 0;
+        // const updatedMales = allCountyMales + value.male;
+        // const updatedFemales = allCountyFemales + value.female;
+        // acc[county] = updatedMales + updatedFemales;
 
-            return acc;
-
-        }, {})
+        // return acc;
 
 
         // let countyValues = ;
 
-        console.log(individualCounty);
+
 
         // Graph
         var ctx = document.getElementById('chart').getContext('2d');
