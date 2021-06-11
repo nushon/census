@@ -100,6 +100,14 @@
             border-radius: 8px;
         }
         
+        #distChartDiv {
+            /* background-color: #828282; */
+            /* margin-bottom: 300px; */
+            margin: -180px 0px 0px 0px;
+            height: 300px;
+            width: 965px;
+        }
+        
         #thirddiv {
             display: grid;
             grid-template-columns: 35% 35%;
@@ -127,6 +135,14 @@
         
         #district {
             margin: 0px 0px -10px 0px;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 300;
+            font-size: x-large;
+        }
+        
+        #distDiv {
+            /* background-color: #828282; */
+            width: 600px;
         }
         
         #fourthdiv {
