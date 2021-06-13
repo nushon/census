@@ -1,5 +1,6 @@
 let censusData;
 let individualDistrict;
+let districtValue;
 
 fetch('./census.json')
     .then(response => response.json())
@@ -113,6 +114,10 @@ fetch('./census.json')
             }
         });
         // GETTING DISTRICTS
+        totalCounties.forEach((element, index) => {
+            document.getElementById('counties').innerHTML += `<option value="${element.id}">${element}</option>`;
+        });
+
         let district = censusData.map(ele => {
             return ele.district;
         });
@@ -128,12 +133,21 @@ fetch('./census.json')
         console.log(individualDistrict);
 
 
-        District = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.district])), {})
-        console.log(District);
-        // if (individualDistrict === individualDistrict.Bomi) {
-        //     console.log(individualDistrict.Bomi);
-        // }
+        function countyAndDistrict(select) {
+            let selectedCounty = select;
+            console.log(selectedCounty);
 
+            censusData.map(ele => {
+                if (ele.county === selectedCounty) {
+                    districtValue = ele.district;
+
+
+                }
+            });
+
+        }
+
+        console.log(districtValue);
 
         // DISTRICT CHART
 
