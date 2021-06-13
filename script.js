@@ -1,5 +1,5 @@
 let censusData;
-
+let individualDistrict;
 
 fetch('./census.json')
     .then(response => response.json())
@@ -36,8 +36,8 @@ fetch('./census.json')
             return county.indexOf(c) === index;
         });
 
-        console.log(totalCounties)
-            // Getting Total Population
+        console.log('List counties', totalCounties);
+        // Getting Total Population
         let getTotal = (malePop + femalePop);
         let totalpop = document.getElementById("totalpop").innerHTML = new Intl.NumberFormat().format(getTotal);
 
@@ -46,7 +46,7 @@ fetch('./census.json')
         // Getting Total for individual county
 
         let individualCounty = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.county] || 0) + value.male + value.female, acc), {})
-        console.log(individualCounty);
+        console.log('Total for county', individualCounty);
 
         // Graph
 
@@ -124,54 +124,73 @@ fetch('./census.json')
 
         console.log(districsList);
 
-        let individualDistrict = censusData.reduce((acc, value) => (acc[value.district] = (acc[value.district] || 0) + value.male + value.female, acc), {})
+        individualDistrict = censusData.reduce((acc, value) => (acc[value.district] = (acc[value.district] || 0) + value.male + value.female, acc), {})
         console.log(individualDistrict);
-        // document.getElementById("tbody").innerHTML = "";
-        totalCounties.forEach((element, index) => {
-            document.getElementById("counties").innerHTML += `<option value="${element.id}">${element}</option>`;
 
 
-            if (element.id === (element.value)) {
-                var ctx = document.getElementById('districtChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: districsList,
-                        datasets: [{
-                            label: 'Small Radius',
-                            label: 'Counties Population',
-                            borderRadius: 5,
-                            barThickness: 20,
-                            data: individualDistrict,
-                            backgroundColor: [
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2'
-                            ],
-                            borderColor: [
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2',
-                                '#B1D2C2'
-                            ],
-                            borderWidth: 2,
+        District = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.district])), {})
+        console.log(District);
+        // if (individualDistrict === individualDistrict.Bomi) {
+        //     console.log(individualDistrict.Bomi);
+        // }
 
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
+
+        // DISTRICT CHART
+
+
+        var ctx = document.getElementById('districtChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: districsList,
+                datasets: [{
+                    label: 'Small Radius',
+                    label: 'Counties Population',
+                    borderRadius: 5,
+                    barThickness: 20,
+                    data: individualDistrict,
+                    backgroundColor: [
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2'
+                    ],
+                    borderColor: [
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2',
+                        '#B1D2C2'
+                    ],
+                    borderWidth: 2,
+
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
-                });
+                }
             }
+        });
+        // document.getElementById("tbody").innerHTML = "";
+        totalCounties.forEach((element, value) => {
+            document.getElementById("counties").innerHTML += `<option value="${element.name}">${element}</option>`;
+
+
+            function refreshChart(district) {
+
+            }
+
+
+
+            // if (element.id === (element.value)) {
+
+            // }
 
         });
 
