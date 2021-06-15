@@ -1,7 +1,13 @@
+let listOfCounties = document.querySelector('#counties');
+
 let censusData;
 let individualDistrict;
-let districtValue;
-
+// let districtValue;
+// let eachDistrict;
+// // let result;
+// // let maleResult;
+// // let femaleResult;
+// // let distObj = {};
 fetch('./census.json')
     .then(response => response.json())
     .then(data => {
@@ -15,8 +21,8 @@ fetch('./census.json')
         const MalePopulation = (accumulator, currentValue) => accumulator + currentValue;
         let malePop = (male.reduce(MalePopulation));
 
-        let totalmalePop = document.getElementById("malePop").innerHTML = new Intl.NumberFormat().format(malePop);
-        console.log("Male", totalmalePop);
+        document.getElementById("malePop").innerHTML = new Intl.NumberFormat().format(malePop);
+        // console.log("Male", totalmalePop);
 
         // Getting total Female Popilation Using Map
         let female = censusData.map(ele => {
@@ -25,32 +31,29 @@ fetch('./census.json')
         // Getting total Female Popilation Using reduce
         const FemalePopulation = (accumulator, currentValue) => accumulator + currentValue;
         let femalePop = (female.reduce(FemalePopulation));
-        let totalfemalePop = document.getElementById("femalePop").innerHTML = new Intl.NumberFormat().format(femalePop);;
-        console.log("Female", totalfemalePop);
+        document.getElementById("femalePop").innerHTML = new Intl.NumberFormat().format(femalePop);;
+        // console.log("Female", totalfemalePop);
 
+        // Getting Total Population
+        let getTotal = (malePop + femalePop);
+        document.getElementById("totalpop").innerHTML = new Intl.NumberFormat().format(getTotal);
+
+
+        //Counties without duplicate
         let county = censusData.map(ele => {
             return ele.county;
         });
-
-
         let totalCounties = county.filter((c, index) => {
             return county.indexOf(c) === index;
         });
+        // console.log('List counties', totalCounties);
 
-        console.log('List counties', totalCounties);
-        // Getting Total Population
-        let getTotal = (malePop + femalePop);
-        let totalpop = document.getElementById("totalpop").innerHTML = new Intl.NumberFormat().format(getTotal);
 
-        console.log(new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(totalpop));
-
-        // Getting Total for individual county
-
+        //county total for male and female
         let individualCounty = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.county] || 0) + value.male + value.female, acc), {})
-        console.log('Total for county', individualCounty);
+            // console.log('Total for county', individualCounty);
 
-        // Graph
-
+        // Countyies bar chart
         var ctx = document.getElementById('chart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -91,19 +94,16 @@ fetch('./census.json')
             }
         });
 
+        //Doughnut chart for total male and female seperately
         new Chart(document.getElementById("doughnut-chart"), {
             type: 'doughnut',
             data: {
-
                 datasets: [{
                     label: "Population (millions)",
                     backgroundColor: ["#FFFFFF", "#B1D2C2"],
                     data: [femalePop, malePop]
                 }],
                 labels: ["Female", "Male"],
-                // borderRadius: 20,
-
-
             },
             options: {
                 title: {
@@ -113,101 +113,94 @@ fetch('./census.json')
                 aspectRatio: 1.2
             }
         });
+
+
+
         // GETTING DISTRICTS
-        totalCounties.forEach((element, index) => {
-            document.getElementById('counties').innerHTML += `<option value="${element.id}">${element}</option>`;
-        });
+        let counties_district = {}
 
-        let district = censusData.map(ele => {
-            return ele.district;
-        });
-
-
-        let districsList = district.filter((c, index) => {
-            return district.indexOf(c) === index;
-        });
-
-        console.log(districsList);
-
-        individualDistrict = censusData.reduce((acc, value) => (acc[value.district] = (acc[value.district] || 0) + value.male + value.female, acc), {})
-        console.log(individualDistrict);
-
-
-        function countyAndDistrict(select) {
-            let selectedCounty = select;
-            console.log(selectedCounty);
-
-            censusData.map(ele => {
-                if (ele.county === selectedCounty) {
-                    districtValue = ele.district;
-
-
-                }
+        function name(list) {
+            list.forEach((element) => {
+                listOfCounties.insertAdjacentHTML("beforeend", `<option>${element}</option>`);
             });
+        }
+        name(totalCounties);
+
+        update();
+    })
+
+
+
+// let districtName;
+// DISTRICT CHART
+
+
+function update() {
+    let select_county = listOfCounties.value
+    let districtName = [];
+    let districtMale = [];
+    let districtFemale = [];
+    censusData.forEach(ele => {
+
+        if (ele.county === select_county) {
+            let val = ele.district;
+            districtName.push(val);
+
+
+            if (ele.county === select_county) {
+                let value = ele.male;
+                districtMale.push(value);
+            }
+
+            if (ele.county === select_county) {
+                let value = ele.female;
+                districtFemale.push(value);
+            }
+
 
         }
-
-        console.log(districtValue);
-
-        // DISTRICT CHART
+    })
 
 
-        var ctx = document.getElementById('districtChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: districsList,
-                datasets: [{
+    var ctx = document.getElementById('districtChart').getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: districtName,
+
+            datasets: [{
                     label: 'Small Radius',
-                    label: 'Counties Population',
+                    borderRadius: 5,
+                    // barThickness: 20,
+                    data: districtMale,
+                    label: "Male",
+                    backgroundColor: "#B1D2C2",
+                    borderColor: "#B1D2C2",
+                    barPercentage: 0.5
+                },
+                {
+                    label: 'Small Radius',
                     borderRadius: 5,
                     barThickness: 20,
-                    data: individualDistrict,
-                    backgroundColor: [
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2'
-                    ],
-                    borderColor: [
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2',
-                        '#B1D2C2'
-                    ],
-                    borderWidth: 2,
-
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    data: districtFemale,
+                    label: "Female",
+                    backgroundColor: "#F0F2EF",
+                    borderColor: "#F0F2EF"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-        // document.getElementById("tbody").innerHTML = "";
-        totalCounties.forEach((element, value) => {
-            document.getElementById("counties").innerHTML += `<option value="${element.name}">${element}</option>`;
-
-
-            function refreshChart(district) {
-
-            }
-
-
-
-            // if (element.id === (element.value)) {
-
-            // }
-
-        });
-
-
-
+        }
     })
+
+    console.log("County name:", districtName);
+    console.log("County Males:", districtMale);
+    console.log("County Females:", districtFemale);
+
+}
