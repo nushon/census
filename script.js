@@ -1,5 +1,6 @@
 let listOfCounties = document.querySelector('#counties');
-
+let listOfHousehold = document.querySelector('#householdList');
+let householdData;
 let censusData;
 let individualDistrict;
 // let districtValue;
@@ -12,6 +13,7 @@ fetch('./census.json')
     .then(response => response.json())
     .then(data => {
         censusData = data.population;
+        householdData = data.households;
 
         // Getting total Male Popilation Using Map
         let male = censusData.map(ele => {
@@ -115,9 +117,9 @@ fetch('./census.json')
         });
 
 
-
+        // console.log(householdData);
         // GETTING DISTRICTS
-        let counties_district = {}
+        // let counties_district = {}
 
         function name(list) {
             list.forEach((element) => {
@@ -127,7 +129,18 @@ fetch('./census.json')
         name(totalCounties);
 
         update();
+
+        function householdName(list) {
+            list.forEach((element) => {
+                householdList.insertAdjacentHTML("beforeend", `<option>${element}</option>`);
+            });
+        }
+        householdName(totalCounties);
+
+        updateHousehold();
     })
+
+
 
 
 
@@ -203,4 +216,73 @@ function update() {
     console.log("County Males:", districtMale);
     console.log("County Females:", districtFemale);
 
+}
+
+function updateHousehold() {
+    let select_county = listOfCounties.value
+    let settlementName = [];
+    let householdMale = [];
+    let householdFemale = [];
+    householdData.forEach(ele => {
+
+        if (ele.county === select_county) {
+            let val = ele.settlement;
+            settlementName.push(val);
+
+
+            if (ele.county === select_county) {
+                let value = ele.male;
+                householdMale.push(value);
+            }
+
+            if (ele.county === select_county) {
+                let value = ele.female;
+                householdFemale.push(value);
+            }
+
+
+        }
+    })
+
+
+    var ctx = document.getElementById("householdChart").getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: settlementName,
+
+            datasets: [{
+                    label: 'Small Radius',
+                    borderRadius: 5,
+                    // barThickness: 20,
+                    data: householdMale,
+                    label: "Male",
+                    backgroundColor: "#B1D2C2",
+                    borderColor: "#B1D2C2",
+                    barPercentage: 0.5
+                },
+                {
+                    label: 'Small Radius',
+                    borderRadius: 5,
+                    barThickness: 20,
+                    data: householdFemale,
+                    label: "Female",
+                    backgroundColor: "#F0F2EF",
+                    borderColor: "#F0F2EF"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
+
+    console.log("Settlement:", settlementName);
+    console.log("Settlement Male:", householdMale);
+    console.log("Settlement Female:", householdFemale);
 }

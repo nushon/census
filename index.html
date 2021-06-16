@@ -100,7 +100,20 @@
     </div>
 
     <div id="fifthDiv">
-        <div id="householdChart"></div>
+        <div id="householdChart">
+
+            <div id="householdDiv">
+                <h3 id="householdText">Distribution of Population by Number of Households</h3>
+            </div>
+            <div id="listDiv">
+                <select name="county" id="householdList" onchange="updateHousehold()">
+                 <option disabled>Select</option>
+            </select>
+            </div>
+
+
+            <div id="householdChartDiv"> <canvas id="householdChart"></canvas> </div>
+        </div>
         <div id="population"></div>
     </div>
     <script src="./script.js"></script>

@@ -141,6 +141,36 @@
             font-size: x-large;
         }
         
+        #householdList {
+            background-color: #F0F2EF;
+            /* border-color: #B1D2C2; */
+            border: 3px solid#B1D2C2;
+            width: 50%;
+            height: 50px;
+            font-size: x-large;
+            text-align: center;
+            /* margin-bottom: 50px; */
+            margin: 0px 0px 60px 150px;
+        }
+        
+        #householdText {
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 300;
+            font-size: large;
+        }
+        
+        #listDiv {
+            /* background-color: thistle; */
+            width: 45%;
+            margin: -60px 0px 0px 350px;
+        }
+        
+        #householdDiv {
+            /* background-color: tomato; */
+            width: 45%;
+            margin: 40px 0px 0px 40px;
+        }
+        
         #distDiv {
             /* background-color: #828282; */
             width: 600px;
