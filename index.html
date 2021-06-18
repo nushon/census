@@ -15,6 +15,10 @@
 
     <header>
         <h1 class="census">census2008</h1>
+
+        <div>
+
+        </div>
         <!-- <div id="rigthdiv">
             <div class="part">
                 <h3>Home</h3>
@@ -86,14 +90,14 @@
 
     <div id="fourthdiv">
         <div id="txtDownload">
-            <h2>Download 2008 Census data</h2>
+            <h2 id="download">Download 2008 Census data</h2>
         </div>
-        <div id="download">
+        <div id="downloadDiv">
             <div id="downloadIcon">
                 <i class="fa fa-arrow-down" style="font-size: 22px; font-weight: 0; margin: 5px 0px 0px 0px; color: white;"></i>
             </div>
             <div id="btnDownload">
-                <h2>Download</h2>
+                <p id="dwnBtnTxt">DOWNLOAD</p>
             </div>
         </div>
 
@@ -112,9 +116,48 @@
             </div>
 
 
-            <div id="householdChartDiv"> <canvas id="householdChart"></canvas> </div>
+            <div id="householdChartDiv"> <canvas id="householdDataChart"></canvas> </div>
         </div>
-        <div id="population"></div>
+        <div id="population">
+            <div id="maleAndFemaleDiv">
+                <p>Counties with most male & female</p>
+            </div>
+            <table>
+                <thead>
+                    <th>County</th>
+                    <th>F</th>
+                    <th>M</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Montserrado</td>
+                        <td>200,456</td>
+                        <td>376,453</td>
+                    </tr>
+                    <tr>
+                        <td>Nimba</td>
+                        <td>200,456</td>
+                        <td>376,453</td>
+                    </tr>
+                    <tr>
+                        <td>Bong</td>
+                        <td>200,456</td>
+                        <td>376,453</td>
+                    </tr>
+                    <tr>
+                        <td>Lofa</td>
+                        <td>200,456</td>
+                        <td>376,453</td>
+                    </tr>
+                    <tr>
+                        <td>Grand Bassa</td>
+                        <td>200,456</td>
+                        <td>376,453</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>

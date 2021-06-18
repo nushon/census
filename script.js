@@ -3,12 +3,33 @@ let listOfHousehold = document.querySelector('#householdList');
 let householdData;
 let censusData;
 let individualDistrict;
-// let districtValue;
-// let eachDistrict;
-// // let result;
-// // let maleResult;
-// // let femaleResult;
-// // let distObj = {};
+var ctx = document.getElementById('districtChart').getContext('2d');
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+})
+
+var ctx = document.getElementById("householdDataChart").getContext('2d');
+
+var householdChart = new Chart(ctx, {
+    type: 'bar',
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+})
+
+
 fetch('./census.json')
     .then(response => response.json())
     .then(data => {
@@ -24,7 +45,6 @@ fetch('./census.json')
         let malePop = (male.reduce(MalePopulation));
 
         document.getElementById("malePop").innerHTML = new Intl.NumberFormat().format(malePop);
-        // console.log("Male", totalmalePop);
 
         // Getting total Female Popilation Using Map
         let female = censusData.map(ele => {
@@ -34,7 +54,6 @@ fetch('./census.json')
         const FemalePopulation = (accumulator, currentValue) => accumulator + currentValue;
         let femalePop = (female.reduce(FemalePopulation));
         document.getElementById("femalePop").innerHTML = new Intl.NumberFormat().format(femalePop);;
-        // console.log("Female", totalfemalePop);
 
         // Getting Total Population
         let getTotal = (malePop + femalePop);
@@ -48,14 +67,10 @@ fetch('./census.json')
         let totalCounties = county.filter((c, index) => {
             return county.indexOf(c) === index;
         });
-        // console.log('List counties', totalCounties);
-
-
         //county total for male and female
         let individualCounty = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.county] || 0) + value.male + value.female, acc), {})
-            // console.log('Total for county', individualCounty);
 
-        // Countyies bar chart
+        // Counties bar chart
         var ctx = document.getElementById('chart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -116,17 +131,12 @@ fetch('./census.json')
             }
         });
 
-
-        // console.log(householdData);
-        // GETTING DISTRICTS
-        // let counties_district = {}
-
-        function name(list) {
+        function Districtname(list) {
             list.forEach((element) => {
                 listOfCounties.insertAdjacentHTML("beforeend", `<option>${element}</option>`);
             });
         }
-        name(totalCounties);
+        Districtname(totalCounties);
 
         update();
 
@@ -141,12 +151,7 @@ fetch('./census.json')
     })
 
 
-
-
-
-// let districtName;
-// DISTRICT CHART
-
+// DISTRICT CHART Functions
 
 function update() {
     let select_county = listOfCounties.value
@@ -156,8 +161,8 @@ function update() {
     censusData.forEach(ele => {
 
         if (ele.county === select_county) {
-            let val = ele.district;
-            districtName.push(val);
+            let value = ele.district;
+            districtName.push(value);
 
 
             if (ele.county === select_county) {
@@ -175,48 +180,38 @@ function update() {
     })
 
 
-    var ctx = document.getElementById('districtChart').getContext('2d');
 
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: districtName,
-
-            datasets: [{
-                    label: 'Small Radius',
-                    borderRadius: 5,
-                    // barThickness: 20,
-                    data: districtMale,
-                    label: "Male",
-                    backgroundColor: "#B1D2C2",
-                    borderColor: "#B1D2C2",
-                    barPercentage: 0.5
-                },
-                {
-                    label: 'Small Radius',
-                    borderRadius: 5,
-                    barThickness: 20,
-                    data: districtFemale,
-                    label: "Female",
-                    backgroundColor: "#F0F2EF",
-                    borderColor: "#F0F2EF"
-                }
-            ]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    })
-
-    console.log("County name:", districtName);
-    console.log("County Males:", districtMale);
-    console.log("County Females:", districtFemale);
-
+    ChartUpdate(districtName, districtMale, districtFemale);
 }
+
+function ChartUpdate(districtName, districtMale, districtFemale) {
+
+    myChart.data.labels = districtName;
+
+    // console.log("Chart", districtName);
+    myChart.data.datasets.pop();
+    myChart.data.datasets.push({
+        data: districtMale,
+        // label: 'Small Radius',
+        label: "Male",
+        backgroundColor: "#B1D2C2",
+        borderColor: "#B1D2C2",
+        borderRadius: 5,
+        barThickness: 20,
+        barPercentage: 0.5
+    }, {
+        data: districtFemale,
+        label: 'Small Radius',
+        label: "Female",
+        backgroundColor: "#F0F2EF",
+        borderColor: "#F0F2EF",
+        borderRadius: 5,
+        barThickness: 20
+    });
+
+    myChart.update();
+}
+
 
 function updateHousehold() {
     let select_county = listOfCounties.value
@@ -245,44 +240,33 @@ function updateHousehold() {
     })
 
 
-    var ctx = document.getElementById("householdChart").getContext('2d');
-
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: settlementName,
-
-            datasets: [{
-                    label: 'Small Radius',
-                    borderRadius: 5,
-                    // barThickness: 20,
-                    data: householdMale,
-                    label: "Male",
-                    backgroundColor: "#B1D2C2",
-                    borderColor: "#B1D2C2",
-                    barPercentage: 0.5
-                },
-                {
-                    label: 'Small Radius',
-                    borderRadius: 5,
-                    barThickness: 20,
-                    data: householdFemale,
-                    label: "Female",
-                    backgroundColor: "#F0F2EF",
-                    borderColor: "#F0F2EF"
-                }
-            ]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    })
-
     console.log("Settlement:", settlementName);
     console.log("Settlement Male:", householdMale);
     console.log("Settlement Female:", householdFemale);
+    householdUpdate(settlementName, householdMale, householdFemale);
+}
+
+function householdUpdate(settlementName, householdMale, householdFemale) {
+    // console.log("Joseph Chart", );
+
+    householdChart.data.labels = settlementName;
+
+    console.log("Household Chart", settlementName);
+    householdChart.data.datasets.pop();
+    householdChart.data.datasets.push({
+        data: householdMale,
+        label: "Male",
+        backgroundColor: "#B1D2C2",
+        borderColor: "#B1D2C2",
+        barThickness: 20,
+        barPercentage: 0.5
+    }, {
+        data: householdFemale,
+        label: "Female",
+        backgroundColor: "#F0F2EF",
+        borderColor: "#F0F2EF",
+        barThickness: 20
+    });
+    // myChart.data.datasets.push();
+    householdChart.update();
 }
