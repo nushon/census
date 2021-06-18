@@ -189,7 +189,7 @@ function ChartUpdate(districtName, districtMale, districtFemale) {
     myChart.data.labels = districtName;
 
     // console.log("Chart", districtName);
-    myChart.data.datasets.pop();
+    myChart.data.datasets = [];
     myChart.data.datasets.push({
         data: districtMale,
         // label: 'Small Radius',
@@ -252,7 +252,7 @@ function householdUpdate(settlementName, householdMale, householdFemale) {
     householdChart.data.labels = settlementName;
 
     console.log("Household Chart", settlementName);
-    householdChart.data.datasets.pop();
+    householdChart.data.datasets = [];
     householdChart.data.datasets.push({
         data: householdMale,
         label: "Male",
