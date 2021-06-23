@@ -14,11 +14,28 @@
 <body>
 
     <header>
-        <h1 class="census">census2008</h1>
+        <div id="hdDiv">
+            <div>
+                <a href="./index.html" style="text-decoration: none;">
+                    <h1 class="census">census2008</h1>
+                </a>
+            </div>
 
-        <div>
 
+            <div id="home">
+                <a href="./index.html" style="text-decoration: none;">
+                    <p id="barText1" class="barText">Home</p>
+                </a>
+            </div>
+            <div id="downloadP">
+                <a href="./index.html.textDownload" style="text-decoration: none;">
+                    <p id="barText2" class="barText">Download</p>
+                </a>
+            </div>
         </div>
+
+
+
         <!-- <div id="rigthdiv">
             <div class="part">
                 <h3>Home</h3>
@@ -30,6 +47,7 @@
         </div> -->
     </header>
     <div id="overall">
+
         <div class="top">
             <div id="icon1">
                 <i class="	fa fa-venus-mars" style="font-size: 40px; font-weight: 1000; margin: 5px 0px 0px 3px; color: white;"></i>
@@ -40,6 +58,7 @@
             </div>
 
         </div>
+
 
         <div class="top">
             <div id="icon2">
@@ -80,7 +99,7 @@
             <h3 id="district">Distribution of Population by District</h3>
         </div>
         <div>
-            <select name="county" id="counties" onchange="update()">
+            <select style="font-family: 'Source Code Pro', monospace;" name="county" id="counties" onchange="update()">
              <option disabled>Select</option>
         </select>
         </div>
@@ -110,7 +129,7 @@
                 <h3 id="householdText">Distribution of Population by Number of Households</h3>
             </div>
             <div id="listDiv">
-                <select name="county" id="householdList" onchange="updateHousehold()">
+                <select style="font-family: 'Source Code Pro', monospace;" name="county" id="householdList" onchange="updateHousehold()">
                  <option disabled>Select</option>
             </select>
             </div>
@@ -128,7 +147,7 @@
                     <th>F</th>
                     <th>M</th>
                 </thead>
-                <tbody>
+                <tbody id="rankTable">
                     <tr>
                         <td>Montserrado</td>
                         <td>200,456</td>
@@ -159,6 +178,10 @@
             </table>
         </div>
     </div>
+
+    <footer>
+        <h3 id="footText">@ Albin N. Karmo</h3>
+    </footer>
     <script src="./script.js"></script>
 </body>
 

@@ -2,6 +2,8 @@ let listOfCounties = document.querySelector('#counties');
 let listOfHousehold = document.querySelector('#householdList');
 let householdData;
 let censusData;
+let individualMale;
+let individualFemale;
 let individualDistrict;
 var ctx = document.getElementById('districtChart').getContext('2d');
 
@@ -69,7 +71,18 @@ fetch('./census.json')
         });
         //county total for male and female
         let individualCounty = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.county] || 0) + value.male + value.female, acc), {})
+            // console.log("County:", individualCounty);
 
+        individualMale = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.county] || 0) + value.male, acc), {})
+            // console.log("Male:", individualMale);
+
+        individualFemale = censusData.reduce((acc, value) => (acc[value.county] = (acc[value.county] || 0) + value.female, acc), {})
+            // console.log("Female", individualFemale);
+
+
+
+        rank();
+        // console.log(rankObj);
         // Counties bar chart
         var ctx = document.getElementById('chart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -133,7 +146,7 @@ fetch('./census.json')
 
         function Districtname(list) {
             list.forEach((element) => {
-                listOfCounties.insertAdjacentHTML("beforeend", `<option>${element}</option>`);
+                listOfCounties.insertAdjacentHTML("beforeend", `<option style="font-family: 'Source Code Pro', monospace;">${element}</option>`);
             });
         }
         Districtname(totalCounties);
@@ -142,7 +155,7 @@ fetch('./census.json')
 
         function householdName(list) {
             list.forEach((element) => {
-                householdList.insertAdjacentHTML("beforeend", `<option>${element}</option>`);
+                householdList.insertAdjacentHTML("beforeend", `<option style="font-family: 'Source Code Pro', monospace;">${element}</option>`);
             });
         }
         householdName(totalCounties);
@@ -188,11 +201,10 @@ function ChartUpdate(districtName, districtMale, districtFemale) {
 
     myChart.data.labels = districtName;
 
-    // console.log("Chart", districtName);
     myChart.data.datasets = [];
     myChart.data.datasets.push({
         data: districtMale,
-        // label: 'Small Radius',
+        label: 'Small Radius',
         label: "Male",
         backgroundColor: "#B1D2C2",
         borderColor: "#B1D2C2",
@@ -206,7 +218,9 @@ function ChartUpdate(districtName, districtMale, districtFemale) {
         backgroundColor: "#F0F2EF",
         borderColor: "#F0F2EF",
         borderRadius: 5,
-        barThickness: 20
+        barThickness: 20,
+        // barPercentage: 0.5
+
     });
 
     myChart.update();
@@ -215,6 +229,7 @@ function ChartUpdate(districtName, districtMale, districtFemale) {
 
 function updateHousehold() {
     let select_county = listOfCounties.value
+    let housholdNumber = [];
     let settlementName = [];
     let householdMale = [];
     let householdFemale = [];
@@ -235,38 +250,72 @@ function updateHousehold() {
                 householdFemale.push(value);
             }
 
+            if (ele.county === select_county) {
+                let value = ele.household_number;
+                housholdNumber.push(value);
+            }
+
 
         }
     })
 
 
-    console.log("Settlement:", settlementName);
-    console.log("Settlement Male:", householdMale);
-    console.log("Settlement Female:", householdFemale);
-    householdUpdate(settlementName, householdMale, householdFemale);
+    // console.log("Settlement:", settlementName);
+    // console.log("Settlement Male:", householdMale);
+    // console.log("Settlement Female:", householdFemale);
+    householdUpdate(settlementName, householdMale, householdFemale, housholdNumber);
 }
 
-function householdUpdate(settlementName, householdMale, householdFemale) {
-    // console.log("Joseph Chart", );
+function householdUpdate(settlementName, householdMale, householdFemale, housholdNumber) {
+
 
     householdChart.data.labels = settlementName;
 
-    console.log("Household Chart", settlementName);
     householdChart.data.datasets = [];
     householdChart.data.datasets.push({
         data: householdMale,
+        label: 'Small Radius',
         label: "Male",
         backgroundColor: "#B1D2C2",
         borderColor: "#B1D2C2",
+        borderRadius: 5,
         barThickness: 20,
-        barPercentage: 0.5
+        barPercentage: 5
     }, {
         data: householdFemale,
+        label: 'Small Radius',
         label: "Female",
         backgroundColor: "#F0F2EF",
         borderColor: "#F0F2EF",
+        borderRadius: 5,
         barThickness: 20
+    }, {
+        data: housholdNumber,
+        label: 'Small Radius',
+        label: "Household",
+        backgroundColor: "#2E3138",
+        borderColor: "#2E3138",
+        borderRadius: 5,
+        barThickness: 20,
     });
     // myChart.data.datasets.push();
     householdChart.update();
+}
+
+// Ranking top 5 Males and Females
+
+
+function rank() {
+
+    // Getting Male and Female Values
+    let resultMale = Object.entries(individualMale);
+
+    let resultFemale = Object.entries(individualFemale);
+
+    // Sorting
+    let sortedMale = resultMale.sort((a, b) => b - a).slice(0, 5);
+    console.log("Top 5 Males", sortedMale);
+
+    let sortedFemale = resultFemale.sort((a, b) => b - a).slice(0, 5);
+    console.log("Top 5 Females", sortedFemale);
 }
